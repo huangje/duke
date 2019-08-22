@@ -19,9 +19,14 @@ public class Duke {
             String[] tokens = message.split(" "); //parse string into done and the number
             if(tokens[0].equals("done")){
                 int idTaskDone = Integer.parseInt(tokens[1]);
-                tasks[(idTaskDone - 1)].isDone = true;
-                System.out.println(line + "Nice! I've marked this task as done : \n" +
-                        "[" + tasks[(idTaskDone-1)].getStatusIcon() + "] " + tasks[(idTaskDone - 1)].description + "\n" + line);
+                if(idTaskDone > tasksId || idTaskDone <= 0){
+                    System.out.println(line + "this task doesn't exist \n" + line);
+                }
+                else {
+                    tasks[(idTaskDone - 1)].isDone = true;
+                    System.out.println(line + "Nice! I've marked this task as done : \n" +
+                            "[" + tasks[(idTaskDone - 1)].getStatusIcon() + "] " + tasks[(idTaskDone - 1)].description + "\n" + line);
+                }
             }
             else if(message.equals("bye")){ //exit
                 System.out.println(line + "bye. Hope to see you again soon ! \n" + line);
