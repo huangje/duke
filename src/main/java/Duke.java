@@ -11,8 +11,8 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
         String line = "______________________________________________________________ \n";
         Task[] tasks = new  Task[100];
-        boolean hasError = false;
-        int tasksId = 0;
+        SaveFile saveFile = new SaveFile("/home/huang/CS2113/duke/data/dukeHistory");
+        int tasksId = saveFile.readFile(tasks);
         boolean running = true;
         while(running){
             Scanner input = new Scanner(System.in);
@@ -31,6 +31,7 @@ public class Duke {
             }
             else if(message.equals("bye")){ //exit
                 System.out.println(line + "Bye. Hope to see you again soon ! \n" + line);
+                saveFile.writeFile(tasks, tasksId);
                 running = false;
             }
             else if(message.equals("list")){ //listing all tasks
@@ -60,7 +61,7 @@ public class Duke {
                             }
                         }
                         else {
-                            tasks[tasksId] = new Todo(todoMessage[1]);
+                            tasks[tasksId] = new Todo(todoMessage[1].trim());
                             int numberTask = tasksId + 1;
                             System.out.println(line + "Got it. I've added this task : \n" + tasks[tasksId].toString() +
                                     "\nNow you have " + numberTask + " tasks in the list. \n" +line);
@@ -103,7 +104,7 @@ public class Duke {
                                     }
                                 }
                                 else {
-                                    tasks[tasksId] = new Deadline(deadlineMessage[0], deadlineMessage[1]);
+                                    tasks[tasksId] = new Deadline(deadlineMessage[0].trim(), deadlineMessage[1].trim());
                                     int numberTask = tasksId + 1;
                                     System.out.println(line + "Got it. I've added this task : \n" + tasks[tasksId].toString() +
                                             "\nNow you have " + numberTask + " tasks in the list. \n" +line);
@@ -149,7 +150,7 @@ public class Duke {
                                     }
                                 }
                                 else {
-                                    tasks[tasksId] = new Event(eventMessage[0], eventMessage[1]);
+                                    tasks[tasksId] = new Event(eventMessage[0].trim(), eventMessage[1].trim());
                                     int numberTask = tasksId + 1;
                                     System.out.println(line + "Got it. I've added this task : \n" + tasks[tasksId].toString() +
                                             "\nNow you have " + numberTask + " tasks in the list. \n" +line);
