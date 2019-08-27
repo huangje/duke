@@ -1,4 +1,6 @@
-package PACKAGE_NAME;
+public class NoTaskException extends DukeException {
 
-public class NoTaskException {
+    public NoTaskException(String s) {
+        super(s);
+    }
 }

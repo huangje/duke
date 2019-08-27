@@ -1,4 +1,5 @@
-package PACKAGE_NAME;
-
-public class NoDateException {
+public class NoDateException extends DukeException {
+    public NoDateException(String s) {
+        super(s);
+    }
 }
