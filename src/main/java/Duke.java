@@ -38,7 +38,7 @@ public class Duke {
                 System.out.print(line + "Here are the tasks in your list \n");
                 for(int i =0; i <tasksId; i++){
                     int numbTask = i+1;
-                    System.out.println(numbTask + ". " + "[" + tasks[i].getStatusIcon() + "] " + tasks[i].description);
+                    System.out.println(numbTask + tasks[i].toString());
                 }
                 System.out.print(line);
             }
@@ -71,7 +71,7 @@ public class Duke {
 
                             }
                             else {
-                                String[] deadlineMessage = messageWoDeadline[1].split("by");
+                                String[] deadlineMessage = messageWoDeadline[1].split("/by");
                                 if (deadlineMessage.length == 1) {
                                     throw new NoDateException(line + "OOPS!!! The date of a deadline cannot be empty\n" + line);
                                 }
@@ -99,7 +99,7 @@ public class Duke {
                                 throw new NoTaskException(line + "OOPS!!! The description of a event cannot be empty\n" + line);
                             }
                             else {
-                                String[] eventMessage = messageWoEvent[1].split("at");
+                                String[] eventMessage = messageWoEvent[1].split("/at");
                                 if (eventMessage.length == 1) {
                                     throw new NoDateException(line + "OOPS!!! The date of a event cannot be empty\n" + line);
                                 }
