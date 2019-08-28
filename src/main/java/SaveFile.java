@@ -1,4 +1,7 @@
 import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class SaveFile {
@@ -25,6 +28,7 @@ public class SaveFile {
         while (sc.hasNext()) {
             String line = sc.nextLine();
             String[] tokens = line.split("/");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm", Locale.ENGLISH);
             switch (tokens[0]){
                 case "T" :
                     if(tokens[1].equals("1")){
@@ -35,19 +39,21 @@ public class SaveFile {
                     }
                     break;
                 case "D" :
+                    String dateD = tokens[3].replace("T", " ");
                     if(tokens[1].equals("1")){
-                        task[numberTasks] = new Deadline(tokens[2], tokens[3], true);
+                        task[numberTasks] = new Deadline(tokens[2], LocalDateTime.parse(dateD, formatter), true);
                     }
                     else {
-                        task[numberTasks] = new Deadline(tokens[2], tokens[3], true);
+                        task[numberTasks] = new Deadline(tokens[2], LocalDateTime.parse(dateD, formatter), true);
                     }
                     break;
                 case "E":
+                    String dateE = tokens[3].replace("T", " ");
                     if(tokens[1].equals("1")){
-                        task[numberTasks] = new Event(tokens[2], tokens[3], true);
+                        task[numberTasks] = new Event(tokens[2], LocalDateTime.parse(dateE, formatter), true);
                     }
                     else {
-                        task[numberTasks] = new Event(tokens[2], tokens[3], true);
+                        task[numberTasks] = new Event(tokens[2], LocalDateTime.parse(dateE, formatter), true);
                     }
                     break;
             }
@@ -72,15 +78,15 @@ public class SaveFile {
                         }
                     } else if (tasks[i].isDeadline()) {
                         if (tasks[i].isDone) {
-                            fileWriter.write("D/1/" + tasks[i].description + "/" + ((Deadline) tasks[i]).by+ "\n");
+                            fileWriter.write("D/1/" + tasks[i].description + "/" + ((Deadline) tasks[i]).by.toString()+ "\n");
                         } else {
-                            fileWriter.write("D/0/" + tasks[i].description + "/" + ((Deadline) tasks[i]).by+ "\n");
+                            fileWriter.write("D/0/" + tasks[i].description + "/" + ((Deadline) tasks[i]).by.toString()+ "\n");
                         }
                     } else if (tasks[i].isEvent()) {
                         if (tasks[i].isDone) {
-                            fileWriter.write("D/1/" + tasks[i].description + "/" + ((Event) tasks[i]).at+ "\n");
+                            fileWriter.write("D/1/" + tasks[i].description + "/" + ((Event) tasks[i]).at.toString()+ "\n");
                         } else {
-                            fileWriter.write("D/0/" + tasks[i].description + "/" + ((Event) tasks[i]).at+ "\n");
+                            fileWriter.write("D/0/" + tasks[i].description + "/" + ((Event) tasks[i]).at.toString()+ "\n");
                         }
                     }
                 }

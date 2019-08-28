@@ -1,3 +1,5 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 //@@author huangje
@@ -83,11 +85,20 @@ public class Duke {
                                         throw new NoDateException(line + "OOPS!!! The date of a deadline cannot be empty\n" + line);
                                     }
                                     else {
-                                        tasks[tasksId] = new Deadline(deadlineMessage[0].trim(), deadlineMessage[1].trim());
-                                        int numberTask = tasksId + 1;
-                                        System.out.println(line + "Got it. I've added this task : \n" + tasks[tasksId].toString() +
-                                                "\nNow you have " + numberTask + " tasks in the list. \n" + line);
-                                        tasksId++;
+                                        LocalDateTime date = null;
+                                        try{
+                                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy kkmm", Locale.ENGLISH);
+                                            date = LocalDateTime.parse(deadlineMessage[1].trim(), formatter);
+                                        }catch (Exception e){
+                                            System.out.println("OOPS!!! The date format is invalid, please write as DD/MM/YYYY HHMM");
+                                        }
+                                        if(!(date == null)) {
+                                            tasks[tasksId] = new Deadline(deadlineMessage[0].trim(), date);
+                                            int numberTask = tasksId + 1;
+                                            System.out.println(line + "Got it. I've added this task : \n" + tasks[tasksId].toString() +
+                                                    "\nNow you have " + numberTask + " tasks in the list. \n" + line);
+                                            tasksId++;
+                                        }
                                     }
                                 }
 
@@ -111,11 +122,21 @@ public class Duke {
                                         throw new NoDateException(line + "OOPS!!! The date of a event cannot be empty\n" + line);
                                     }
                                     else {
-                                        tasks[tasksId] = new Event(eventMessage[0].trim(), eventMessage[1].trim());
-                                        int numberTask = tasksId + 1;
-                                        System.out.println(line + "Got it. I've added this task : \n" + tasks[tasksId].toString() +
-                                                "\nNow you have " + numberTask + " tasks in the list. \n" + line);
-                                        tasksId++;
+                                        LocalDateTime date = null;
+                                        try{
+                                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy kkmm", Locale.ENGLISH);
+                                            date = LocalDateTime.parse(eventMessage[1].trim(), formatter);
+                                        }catch (Exception e){
+                                            System.out.println("OOPS!!! The date format is invalid, please write as DD/MM/YYYY HHMM");
+                                        }
+                                        if(!(date == null)) {
+                                            tasks[tasksId] = new Event(eventMessage[0].trim(), date);
+                                            int numberTask = tasksId + 1;
+                                            System.out.println(line + "Got it. I've added this task : \n" + tasks[tasksId].toString() +
+                                                    "\nNow you have " + numberTask + " tasks in the list. \n" + line);
+                                            tasksId++;
+                                        }
+
                                     }
                                 }
 
@@ -135,3 +156,4 @@ public class Duke {
         }
     }
 }
+
