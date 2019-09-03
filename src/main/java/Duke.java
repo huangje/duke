@@ -19,17 +19,23 @@ public class Duke {
         while(running){
             Scanner input = new Scanner(System.in);
             String message = input.nextLine();
-            String[] tokens = message.split(" "); //parse string into the command and the rest
-            if(tokens[0].equals("done")){
-                int idTaskDone = Integer.parseInt(tokens[1]);
-                if(idTaskDone > tasksId || idTaskDone <= 0){ // can't finish a task that doesn't exist
-                    System.out.println(line + "Sorry, this task doesn't exist \n" + line);
+
+            String[] tokens = message.split(" ", 2); //parse the command and the rest
+
+            if(tokens[0].equals("done")) {
+                if (tokens.length == 1) {
+                    System.out.println(line + "OOPS! You forgot to put the number of the task \n" + line);
+                } else {
+                    int idTaskDone = Integer.parseInt(tokens[1]);
+                    tasks.get(idTaskDone - 1).isDone = true; //idTaskDone goes from 1 to n, the position in the array goes from 0 to n-1
+                    if (idTaskDone > tasksId || idTaskDone <= 0) { // can't finish a task that doesn't exist
+                        System.out.println(line + "Sorry, this task doesn't exist \n" + line);
+                    } else {
+                        System.out.println(line + "Nice! I've marked this task as done : \n" +
+                                tasks.get(idTaskDone - 1).toString() + "\n" + line);
+                    }
                 }
-                else {
-                    tasks.get(idTaskDone-1).isDone = true; //idTaskDone goes from 1 to n, the position in the array goes from 0 to n-1
-                    System.out.println(line + "Nice! I've marked this task as done : \n" +
-                             tasks.get(idTaskDone-1).toString() + "\n" + line);
-                }
+
             }
             else if(message.equals("bye")){ //exit
                 System.out.println(line + "Bye. Hope to see you again soon ! \n" + line);
@@ -44,16 +50,32 @@ public class Duke {
                 }
                 System.out.print(line);
             }
-            else if(tokens[0].equals("delete")){
+
+            else if(tokens[0].equals("delete")) {
                 int idTaskDelete = Integer.parseInt(tokens[1]);
-                if(idTaskDelete > tasksId || idTaskDelete <= 0){ // can't finish a task that doesn't exist
+                if (idTaskDelete > tasksId || idTaskDelete <= 0) { // can't finish a task that doesn't exist
                     System.out.println(line + "Sorry, this task doesn't exist \n" + line);
-                }
-                else {
-                    Task task = tasks.remove(idTaskDelete-1);
+                } else {
+                    Task task = tasks.remove(idTaskDelete - 1);
                     tasksId--;
                     System.out.println(line + " Noted. I've removed this task: \n" +
                             task.toString() + "\n" + "Now you have " + tasksId + " tasks in the list \n" + line);
+                }
+            }
+            else if(tokens[0].equals("find")){
+                if(tokens.length == 1){
+                    System.out.println(line + "OOPS! You forgot to write the keyword \n" + line);
+                }
+                else {
+                    System.out.println(line + "\n Here are the matching tasks in your list: \n");
+                    int numbTask = 0;
+                    for (Task task : tasks) {
+                        numbTask++;
+                        if (task.description.contains(tokens[1])) {
+                            System.out.println(numbTask + "." + task.toString());
+                        }
+                    }
+                    System.out.println(line);
                 }
             }
             else {
