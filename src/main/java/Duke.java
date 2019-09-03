@@ -12,7 +12,7 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
         String line = "______________________________________________________________ \n";
-        Task[] tasks = new  Task[100];
+        Task[] tasks = new  Task[100]; //a maximum of 100 task
         SaveFile saveFile = new SaveFile("/home/huang/CS2113/duke/data/dukeHistory");
         int tasksId = saveFile.readFile(tasks);
         boolean running = true;
@@ -22,11 +22,11 @@ public class Duke {
             String[] tokens = message.split(" "); //parse string into done and the number
             if(tokens[0].equals("done")){
                 int idTaskDone = Integer.parseInt(tokens[1]);
-                if(idTaskDone > tasksId || idTaskDone <= 0){
+                if(idTaskDone > tasksId || idTaskDone <= 0){ // can't finish a task that doesn't exist
                     System.out.println(line + "Sorry, this task doesn't exist \n" + line);
                 }
                 else {
-                    tasks[(idTaskDone - 1)].isDone = true;
+                    tasks[(idTaskDone - 1)].isDone = true; //idTaskDone goes from 1 to n, the position in the array goes from 0 to n-1
                     System.out.println(line + "Nice! I've marked this task as done : \n" +
                             "[" + tasks[(idTaskDone - 1)].getStatusIcon() + "] " + tasks[(idTaskDone - 1)].description + "\n" + line);
                 }
@@ -47,13 +47,13 @@ public class Duke {
             else {
                 try {
                     if (!(tokens[0].equals("todo") || tokens[0].equals("deadline") || tokens[0].equals("event"))) {
-                        throw new NoCommandException(line + "OOPS!!! I'm sorry, but I don't know what that means :-(\n" + line);
+                        throw new NoCommandException("\n" + line + "OOPS!!! I'm sorry, but I don't know what that means :-(\n" + line);
                     }
                     else {
                         if (tokens[0].equals("todo")) {
                             String[] todoMessage = message.split("todo");
                             if (todoMessage.length == 0) {
-                                    throw new NoTaskException(line + "OOPS!!! The description of a todo cannot be empty\n" + line);
+                                    throw new NoTaskException("\n" + line + "OOPS!!! The description of a todo cannot be empty\n" + line);
 
                             }
                             else {
@@ -69,20 +69,20 @@ public class Duke {
 
                             String[] messageWoDeadline = message.split("deadline");
                             if (messageWoDeadline.length == 0) {
-                                throw new NoTaskException(line + "OOPS!!! The description of a deadline cannot be empty\n" + line);
+                                throw new NoTaskException("\n"+ line + "OOPS!!! The description of a deadline cannot be empty\n" + line);
 
                             }
                             else {
                                 String[] deadlineMessage = messageWoDeadline[1].split("/by");
                                 if (deadlineMessage.length == 1) {
-                                    throw new NoDateException(line + "OOPS!!! The date of a deadline cannot be empty\n" + line);
+                                    throw new NoDateException("\n"+ line + "OOPS!!! The date of a deadline cannot be empty\n" + line);
                                 }
                                 else {
                                     if (deadlineMessage[0].isBlank()) {
-                                        throw new NoTaskException(line + "OOPS!!! The description of a deadline cannot be empty\n" + line);
+                                        throw new NoTaskException("\n"+ line + "OOPS!!! The description of a deadline cannot be empty\n" + line);
                                     }
                                     else if (deadlineMessage[1].isBlank()) {
-                                        throw new NoDateException(line + "OOPS!!! The date of a deadline cannot be empty\n" + line);
+                                        throw new NoDateException("\n"+ line + "OOPS!!! The date of a deadline cannot be empty\n" + line);
                                     }
                                     else {
                                         LocalDateTime date = null;
@@ -90,7 +90,7 @@ public class Duke {
                                             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy kkmm", Locale.ENGLISH);
                                             date = LocalDateTime.parse(deadlineMessage[1].trim(), formatter);
                                         }catch (Exception e){
-                                            System.out.println("OOPS!!! The date format is invalid, please write as DD/MM/YYYY HHMM");
+                                            System.out.println("\n"+ line +"OOPS!!! The date format is invalid, please write as DD/MM/YYYY HHMM" + line);
                                         }
                                         if(!(date == null)) {
                                             tasks[tasksId] = new Deadline(deadlineMessage[0].trim(), date);
@@ -107,35 +107,46 @@ public class Duke {
                         } else if (tokens[0].equals("event")) {
                             String[] messageWoEvent = message.split("event");
                             if (messageWoEvent.length == 0) {
-                                throw new NoTaskException(line + "OOPS!!! The description of a event cannot be empty\n" + line);
+                                throw new NoTaskException("\n" + line + "OOPS!!! The description of a event cannot be empty\n" + line);
                             }
                             else {
                                 String[] eventMessage = messageWoEvent[1].split("/at");
                                 if (eventMessage.length == 1) {
-                                    throw new NoDateException(line + "OOPS!!! The date of a event cannot be empty\n" + line);
+                                    throw new NoDateException("\n" + line + "OOPS!!! The date of a event cannot be empty\n" + line);
                                 }
                                 else {
                                     if (eventMessage[0].isBlank()) {
-                                        throw new NoTaskException(line + "OOPS!!! The description of a event cannot be empty\n" + line);
+                                        throw new NoTaskException("\n" + line + "OOPS!!! The description of a event cannot be empty\n" + line);
                                     }
                                     else if (eventMessage[1].isBlank()) {
-                                        throw new NoDateException(line + "OOPS!!! The date of a event cannot be empty\n" + line);
+                                        throw new NoDateException("\n" + line + "OOPS!!! The date of a event cannot be empty\n" + line);
                                     }
                                     else {
-                                        LocalDateTime date = null;
-                                        try{
-                                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy kkmm", Locale.ENGLISH);
-                                            date = LocalDateTime.parse(eventMessage[1].trim(), formatter);
-                                        }catch (Exception e){
-                                            System.out.println("OOPS!!! The date format is invalid, please write as DD/MM/YYYY HHMM");
+                                        String[] eventDate = eventMessage[1].split("-");
+                                        if(eventDate.length == 1){
+                                            throw new NoDateException("\n" + line + "OOPS!!! The date of a event cannot be empty\n" + line);
+                                        } else if (eventDate[0].isBlank() || eventDate[1].isBlank()) {
+                                            throw new NoDateException("\n" + line + "OOPS!!! One of the two date are empty\n" + line);
                                         }
-                                        if(!(date == null)) {
-                                            tasks[tasksId] = new Event(eventMessage[0].trim(), date);
-                                            int numberTask = tasksId + 1;
-                                            System.out.println(line + "Got it. I've added this task : \n" + tasks[tasksId].toString() +
-                                                    "\nNow you have " + numberTask + " tasks in the list. \n" + line);
-                                            tasksId++;
+                                        else {
+                                            LocalDateTime date1 = null;
+                                            LocalDateTime date2 = null;
+                                            try{
+                                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy kkmm", Locale.ENGLISH); //the date format must be this one
+                                                date1 = LocalDateTime.parse(eventDate[0].trim(), formatter);
+                                                date2 = LocalDateTime.parse(eventDate[1].trim(), formatter);
+                                            }catch (Exception e){
+                                                System.out.println("\n" + line + "OOPS!!! The date format is invalid, please write as DD/MM/YYYY HHMM - DD/MM/YYYY HHMM or the date doesn't exist" +line);
+                                            }
+                                            if(!(date1 == null || date2 == null)) {
+                                                tasks[tasksId] = new Event(eventMessage[0].trim(), date1, date2);
+                                                int numberTask = tasksId + 1;
+                                                System.out.println(line + "Got it. I've added this task : \n" + tasks[tasksId].toString() +
+                                                        "\nNow you have " + numberTask + " tasks in the list. \n" + line);
+                                                tasksId++;
+                                            }
                                         }
+
 
                                     }
                                 }

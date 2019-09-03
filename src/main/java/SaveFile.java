@@ -48,12 +48,13 @@ public class SaveFile {
                     }
                     break;
                 case "E":
-                    String dateE = tokens[3].replace("T", " ");
+                    String dateE1 = tokens[3].replace("T", " ");
+                    String dateE2 = tokens[4].replace("T", " ");
                     if(tokens[1].equals("1")){
-                        task[numberTasks] = new Event(tokens[2], LocalDateTime.parse(dateE, formatter), true);
+                        task[numberTasks] = new Event(tokens[2], LocalDateTime.parse(dateE1, formatter), LocalDateTime.parse(dateE2, formatter), true);
                     }
                     else {
-                        task[numberTasks] = new Event(tokens[2], LocalDateTime.parse(dateE, formatter), true);
+                        task[numberTasks] = new Event(tokens[2], LocalDateTime.parse(dateE2, formatter), LocalDateTime.parse(dateE2, formatter), true);
                     }
                     break;
             }
@@ -84,9 +85,9 @@ public class SaveFile {
                         }
                     } else if (tasks[i].isEvent()) {
                         if (tasks[i].isDone) {
-                            fileWriter.write("D/1/" + tasks[i].description + "/" + ((Event) tasks[i]).at.toString()+ "\n");
+                            fileWriter.write("D/1/" + tasks[i].description + "/" + ((Event) tasks[i]).at1.toString()+ "/" + ((Event) tasks[i]).at2.toString() + "\n");
                         } else {
-                            fileWriter.write("D/0/" + tasks[i].description + "/" + ((Event) tasks[i]).at.toString()+ "\n");
+                            fileWriter.write("D/0/" + tasks[i].description + "/" + ((Event) tasks[i]).at1.toString()+ "/" + ((Event) tasks[i]).at2.toString() +"\n");
                         }
                     }
                 }
