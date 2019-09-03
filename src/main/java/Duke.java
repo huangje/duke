@@ -4,7 +4,7 @@ import java.util.*;
 
 //@@author huangje
 public class Duke {
-    public static void main(String[] args) throws NoCommandException, NoTaskException, NoDateException {
+    public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -12,7 +12,7 @@ public class Duke {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
         String line = "______________________________________________________________ \n";
-        Task[] tasks = new  Task[100]; //a maximum of 100 task
+        ArrayList<Task> tasks = new ArrayList<>();
         SaveFile saveFile = new SaveFile("/home/huang/CS2113/duke/data/dukeHistory");
         int tasksId = saveFile.readFile(tasks);
         boolean running = true;
@@ -26,21 +26,21 @@ public class Duke {
                     System.out.println(line + "Sorry, this task doesn't exist \n" + line);
                 }
                 else {
-                    tasks[(idTaskDone - 1)].isDone = true; //idTaskDone goes from 1 to n, the position in the array goes from 0 to n-1
+                    tasks.get(idTaskDone-1).isDone = true; //idTaskDone goes from 1 to n, the position in the array goes from 0 to n-1
                     System.out.println(line + "Nice! I've marked this task as done : \n" +
-                            "[" + tasks[(idTaskDone - 1)].getStatusIcon() + "] " + tasks[(idTaskDone - 1)].description + "\n" + line);
+                            "[" + tasks.get(idTaskDone-1).getStatusIcon() + "] " + tasks.get(idTaskDone-1).toString() + "\n" + line);
                 }
             }
             else if(message.equals("bye")){ //exit
                 System.out.println(line + "Bye. Hope to see you again soon ! \n" + line);
-                saveFile.writeFile(tasks, tasksId);
+                saveFile.writeFile(tasks);
                 running = false;
             }
             else if(message.equals("list")){ //listing all tasks
                 System.out.print(line + "Here are the tasks in your list \n");
-                for(int i =0; i <tasksId; i++){
+                for(int i = 0; i < tasks.size(); i++){
                     int numbTask = i+1;
-                    System.out.println(numbTask + tasks[i].toString());
+                    System.out.println(numbTask + tasks.get(i).toString());
                 }
                 System.out.print(line);
             }
@@ -57,9 +57,10 @@ public class Duke {
 
                             }
                             else {
-                                tasks[tasksId] = new Todo(todoMessage[1].trim());
-                                int numberTask = tasksId + 1;
-                                System.out.println(line + "Got it. I've added this task : \n" + tasks[tasksId].toString() +
+                                Todo todo = new Todo(todoMessage[1].trim());
+                                tasks.add(todo);
+                                int numberTask = tasks.size();
+                                System.out.println(line + "Got it. I've added this task : \n" + todo.toString() +
                                         "\nNow you have " + numberTask + " tasks in the list. \n" + line);
                                 tasksId++;
                             }
@@ -93,9 +94,10 @@ public class Duke {
                                             System.out.println("\n"+ line +"OOPS!!! The date format is invalid, please write as DD/MM/YYYY HHMM" + line);
                                         }
                                         if(!(date == null)) {
-                                            tasks[tasksId] = new Deadline(deadlineMessage[0].trim(), date);
-                                            int numberTask = tasksId + 1;
-                                            System.out.println(line + "Got it. I've added this task : \n" + tasks[tasksId].toString() +
+                                            Deadline deadline = new Deadline(deadlineMessage[0].trim(), date);
+                                            tasks.add(deadline);
+                                            int numberTask = tasks.size();
+                                            System.out.println(line + "Got it. I've added this task : \n" + deadline.toString() +
                                                     "\nNow you have " + numberTask + " tasks in the list. \n" + line);
                                             tasksId++;
                                         }
@@ -139,9 +141,10 @@ public class Duke {
                                                 System.out.println("\n" + line + "OOPS!!! The date format is invalid, please write as DD/MM/YYYY HHMM - DD/MM/YYYY HHMM or the date doesn't exist" +line);
                                             }
                                             if(!(date1 == null || date2 == null)) {
-                                                tasks[tasksId] = new Event(eventMessage[0].trim(), date1, date2);
-                                                int numberTask = tasksId + 1;
-                                                System.out.println(line + "Got it. I've added this task : \n" + tasks[tasksId].toString() +
+                                                Event event = new Event(eventMessage[0].trim(), date1, date2);
+                                                tasks.add(event);
+                                                int numberTask = tasks.size();
+                                                System.out.println(line + "Got it. I've added this task : \n" + event.toString() +
                                                         "\nNow you have " + numberTask + " tasks in the list. \n" + line);
                                                 tasksId++;
                                             }
