@@ -19,7 +19,7 @@ public class Duke {
         while(running){
             Scanner input = new Scanner(System.in);
             String message = input.nextLine();
-            String[] tokens = message.split(" "); //parse string into done and the number
+            String[] tokens = message.split(" "); //parse string into the command and the rest
             if(tokens[0].equals("done")){
                 int idTaskDone = Integer.parseInt(tokens[1]);
                 if(idTaskDone > tasksId || idTaskDone <= 0){ // can't finish a task that doesn't exist
@@ -28,7 +28,7 @@ public class Duke {
                 else {
                     tasks.get(idTaskDone-1).isDone = true; //idTaskDone goes from 1 to n, the position in the array goes from 0 to n-1
                     System.out.println(line + "Nice! I've marked this task as done : \n" +
-                            "[" + tasks.get(idTaskDone-1).getStatusIcon() + "] " + tasks.get(idTaskDone-1).toString() + "\n" + line);
+                             tasks.get(idTaskDone-1).toString() + "\n" + line);
                 }
             }
             else if(message.equals("bye")){ //exit
@@ -43,6 +43,18 @@ public class Duke {
                     System.out.println(numbTask + tasks.get(i).toString());
                 }
                 System.out.print(line);
+            }
+            else if(tokens[0].equals("delete")){
+                int idTaskDelete = Integer.parseInt(tokens[1]);
+                if(idTaskDelete > tasksId || idTaskDelete <= 0){ // can't finish a task that doesn't exist
+                    System.out.println(line + "Sorry, this task doesn't exist \n" + line);
+                }
+                else {
+                    Task task = tasks.remove(idTaskDelete-1);
+                    tasksId--;
+                    System.out.println(line + " Noted. I've removed this task: \n" +
+                            task.toString() + "\n" + "Now you have " + tasksId + " tasks in the list \n" + line);
+                }
             }
             else {
                 try {
