@@ -26,13 +26,18 @@ public class Duke {
                 if (tokens.length == 1) {
                     System.out.println(line + "OOPS! You forgot to put the number of the task \n" + line);
                 } else {
-                    int idTaskDone = Integer.parseInt(tokens[1]);
-                    tasks.get(idTaskDone - 1).isDone = true; //idTaskDone goes from 1 to n, the position in the array goes from 0 to n-1
-                    if (idTaskDone > tasksId || idTaskDone <= 0) { // can't finish a task that doesn't exist
-                        System.out.println(line + "Sorry, this task doesn't exist \n" + line);
-                    } else {
-                        System.out.println(line + "Nice! I've marked this task as done : \n" +
-                                tasks.get(idTaskDone - 1).toString() + "\n" + line);
+                    if(!tokens[1].matches("\\d+")){
+                        System.out.println(line + "OOPS! Your have to put the number of the task \n" + line);
+                    }
+                    else {
+                        int idTaskDone = Integer.parseInt(tokens[1]);
+                        tasks.get(idTaskDone - 1).isDone = true; //idTaskDone goes from 1 to n, the position in the array goes from 0 to n-1
+                        if (idTaskDone > tasksId || idTaskDone <= 0) { // can't finish a task that doesn't exist
+                            System.out.println(line + "Sorry, this task doesn't exist \n" + line);
+                        } else {
+                            System.out.println(line + "Nice! I've marked this task as done : \n" +
+                                    tasks.get(idTaskDone - 1).toString() + "\n" + line);
+                        }
                     }
                 }
 
