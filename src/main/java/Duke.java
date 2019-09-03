@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -15,9 +18,9 @@ public class Duke {
         ArrayList<Task> tasks = new ArrayList<>();
         SaveFile saveFile = new SaveFile("/home/huang/CS2113/duke/data/dukeHistory");
         int tasksId = saveFile.readFile(tasks);
+        Scanner input = new Scanner(System.in);
         boolean running = true;
         while(running){
-            Scanner input = new Scanner(System.in);
             String message = input.nextLine();
 
             String[] tokens = message.split(" ", 2); //parse the command and the rest
@@ -31,10 +34,10 @@ public class Duke {
                     }
                     else {
                         int idTaskDone = Integer.parseInt(tokens[1]);
-                        tasks.get(idTaskDone - 1).isDone = true; //idTaskDone goes from 1 to n, the position in the array goes from 0 to n-1
                         if (idTaskDone > tasksId || idTaskDone <= 0) { // can't finish a task that doesn't exist
                             System.out.println(line + "Sorry, this task doesn't exist \n" + line);
                         } else {
+                            tasks.get(idTaskDone - 1).isDone = true; //idTaskDone goes from 1 to n, the position in the array goes from 0 to n-1
                             System.out.println(line + "Nice! I've marked this task as done : \n" +
                                     tasks.get(idTaskDone - 1).toString() + "\n" + line);
                         }
