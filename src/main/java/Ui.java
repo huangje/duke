@@ -2,9 +2,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ui {
+    private Scanner sc;
 
-
-
+    public Ui(){
+        sc = new Scanner(System.in);
+    }
     public void showError(String error){
         System.out.println(error);
     }
@@ -64,7 +66,6 @@ public class Ui {
     }
 
     public String readCommand(){
-        Scanner sc = new Scanner(System.in);
         return sc.nextLine();
     }
 }

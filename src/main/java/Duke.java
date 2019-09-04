@@ -32,7 +32,7 @@ public class Duke {
         }
     }
     public static void main(String[] args) {
-        new Duke("data/dukeHistory").run();
+        new Duke("/home/huang/CS2113/duke/data/dukeHistory").run();
     }
 }
 

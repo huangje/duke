@@ -21,10 +21,10 @@ then
 fi
 
 # run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
-java -classpath ../bin Duke < test/test2 > output/test2Result
+java -classpath ../bin Duke < test/test1 > output/test1Result
 rm ../data/dukeHistory
 # compare the output to the expected output
-diff output/test2Result output/test2Expected
+diff output/test1Result output/test1Expected
 if [ $? -eq 0 ]
 then
     echo "Test result: PASSED"
