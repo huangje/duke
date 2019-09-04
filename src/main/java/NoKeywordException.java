@@ -1,4 +1,10 @@
-package PACKAGE_NAME;
+public class NoKeywordException extends DukeException {
 
-public class NoKeywordException {
+    public NoKeywordException() {
+        super();
+    }
+
+    public String getMessage(){
+        return "OOPS! You forgot to write the keyword \n";
+    }
 }

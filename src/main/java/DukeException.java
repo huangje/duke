@@ -1,5 +1,10 @@
 public class DukeException extends Exception {
-    public DukeException(String s){
-        super(s);
+    public DukeException(){
+        super();
+    }
+
+    @Override
+    public String getMessage(){
+        return "There are some problems in Duke";
     }
 }

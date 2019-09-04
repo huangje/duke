@@ -17,18 +17,18 @@ public class Storage {
         }
     }
 
-    public ArrayList<Task> load() {
-
+    public ArrayList<Task> load() throws FileException {
         Scanner sc = null;
         try {
             sc = new Scanner(this.file);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            throw new FileException();
         }
         ArrayList<Task> tasks = new ArrayList<>();
         while (sc.hasNext()) {
             String line = sc.nextLine();
-            String[] tokens = line.split("/");
+            String[] tokens = line.split("//");
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd kk:mm", Locale.ENGLISH);
             switch (tokens[0]){
                 case "T" :
@@ -63,7 +63,7 @@ public class Storage {
         return tasks;
     }
 
-    public void save(ArrayList<Task> tasks){
+    public void save(ArrayList<Task> tasks) throws FileException {
         FileWriter fileWriter = null;
         try {
             fileWriter = new FileWriter(this.file);
@@ -72,22 +72,22 @@ public class Storage {
                 for (Task task : tasks){
                     if (task.isTodo()) {
                         if (task.isDone) {
-                            fileWriter.write("T/1/" + task.description + "\n");
+                            fileWriter.write("T//1//" + task.description + "\n");
                         } else {
 
-                            fileWriter.write("T/0/" + task.description+ "\n");
+                            fileWriter.write("T//0//" + task.description+ "\n");
                         }
                     } else if (task.isDeadline()) {
                         if (task.isDone) {
-                            fileWriter.write("D/1/" + task.description + "/" + ((Deadline) task).by.toString()+ "\n");
+                            fileWriter.write("D//1//" + task.description + "//" + ((Deadline) task).by.toString()+ "\n");
                         } else {
-                            fileWriter.write("D/0/" + task.description + "/" + ((Deadline) task).by.toString()+ "\n");
+                            fileWriter.write("D//0//" + task.description + "//" + ((Deadline) task).by.toString()+ "\n");
                         }
                     } else if (task.isEvent()) {
                         if (task.isDone) {
-                            fileWriter.write("D/1/" + task.description + "/" + ((Event) task).at1.toString()+ "/" + ((Event) task).at2.toString() + "\n");
+                            fileWriter.write("D//1//" + task.description + "//" + ((Event) task).at1.toString()+ "//" + ((Event) task).at2.toString() + "\n");
                         } else {
-                            fileWriter.write("D/0/" + task.description + "/" + ((Event) task).at1.toString()+ "/" + ((Event) task).at2.toString() +"\n");
+                            fileWriter.write("D//0//" + task.description + "//" + ((Event) task).at1.toString()+ "//" + ((Event) task).at2.toString() +"\n");
                         }
                     }
                 }
@@ -97,6 +97,7 @@ public class Storage {
         }
         catch(IOException e){
             e.printStackTrace();
+            throw new FileException();
         }
 
 

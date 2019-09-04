@@ -1,5 +1,4 @@
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 public class DeadlineCommand extends AddCommand {
 
@@ -9,7 +8,7 @@ public class DeadlineCommand extends AddCommand {
         this.task = new Deadline(description, date);
     }
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws UnknownTaskException{
+    public void execute(TaskList tasks, Ui ui, Storage storage) throws UnknownTaskException, FileException {
         super.execute(tasks, ui, storage);
     }
 }

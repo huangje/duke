@@ -1,5 +1,4 @@
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 public class EventCommand extends AddCommand {
 
@@ -8,7 +7,7 @@ public class EventCommand extends AddCommand {
         this.task = new Event(description, date1, date2);
     }
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws UnknownTaskException{
+    public void execute(TaskList tasks, Ui ui, Storage storage) throws UnknownTaskException, FileException {
         super.execute(tasks, ui, storage);
     }
 }

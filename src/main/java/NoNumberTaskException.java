@@ -1,4 +1,10 @@
-package PACKAGE_NAME;
+public class NoNumberTaskException extends DukeException {
 
-public class NoNumberTaskException {
+    public NoNumberTaskException() {
+        super();
+    }
+
+    public String getMessage(){
+        return "OOPS! You have to put the number of the task n\"";
+    }
 }

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Ui {
 
@@ -47,5 +48,23 @@ public class Ui {
     public void showAdd(Task task, int numberTask){
         System.out.println("Got it. I've added this task : \n" + task.toString() +
                 "\nNow you have " + numberTask + " tasks in the list");
+    }
+
+    public void showWelcome(){
+        String logo = " ____        _        \n"
+                + "|  _ \\ _   _| | _____ \n"
+                + "| | | | | | | |/ / _ \\\n"
+                + "| |_| | |_| |   <  __/\n"
+                + "|____/ \\__,_|_|\\_\\___|\n";
+        System.out.println("Hello from\n" + logo);
+    }
+
+    public void showLoadingError(){
+        System.out.println("No task were loaded");
+    }
+
+    public String readCommand(){
+        Scanner sc = new Scanner(System.in);
+        return sc.nextLine();
     }
 }

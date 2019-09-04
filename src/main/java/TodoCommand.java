@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class TodoCommand extends AddCommand {
 
 
@@ -8,7 +6,7 @@ public class TodoCommand extends AddCommand {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws UnknownTaskException{
+    public void execute(TaskList tasks, Ui ui, Storage storage) throws UnknownTaskException, FileException {
         super.execute(tasks, ui, storage);
     }
 }
