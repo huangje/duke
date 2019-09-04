@@ -1,4 +1,10 @@
-package PACKAGE_NAME;
+import java.util.ArrayList;
 
-public class Command {
+public abstract class Command {
+
+    public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws UnknownTaskException;
+
+    public boolean isExit(){
+        return false;
+    }
 }
