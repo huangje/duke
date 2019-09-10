@@ -5,6 +5,6 @@ public class NoDescriptionException extends DukeException {
     }
 
     public String getMessage(){
-        return "OOPS!!! The description of a deadline cannot be empty\n";
+        return "OOPS!!! The description of a task cannot be empty\n";
     }
 }

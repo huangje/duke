@@ -20,6 +20,7 @@ public class Task {
         return "[" + getStatusIcon()+ "] " + this.description;
     }
 
+
     public boolean isDeadline(){
         return false;
     }
