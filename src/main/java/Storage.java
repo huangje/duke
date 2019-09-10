@@ -5,9 +5,16 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
+/**
+ * Storage will deal with reading or writing into a file
+ */
 public class Storage {
     File file;
 
+    /**
+     * Constructor that will read a file, or create it if it doesn't exist
+     * @param file the path to the file
+     */
     public Storage(String file){
         this.file = new File(file);
         try {
@@ -17,6 +24,12 @@ public class Storage {
         }
     }
 
+    /**
+     * read the file and write all the task to an array of task.
+     * if the file is empty, the array is empty too
+     * @return an array of task
+     * @throws FileException thrown when there is a reading error of the file
+     */
     public ArrayList<Task> load() throws FileException {
         Scanner sc = null;
         try {
@@ -63,6 +76,11 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * write all task to the files
+     * @param tasks all the tasks that have to be written to the file
+     * @throws FileException thrown when there is writing problem to the files
+     */
     public void save(ArrayList<Task> tasks) throws FileException {
         FileWriter fileWriter = null;
         try {

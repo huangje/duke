@@ -1,9 +1,18 @@
 //@@author huangje
+
+/**
+ * The main class
+ */
 public class Duke {
 
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
+
+    /**
+     * Constructor
+     * @param filePath the path to the history file
+     */
     public Duke(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);

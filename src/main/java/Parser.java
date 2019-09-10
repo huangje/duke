@@ -2,8 +2,22 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
+/**
+ * the parser class that will parse the user's input
+ */
 public class Parser {
 
+    /**
+     * this method will parse the user's input and throw an error if the input
+     * doesn't correspond to a known command
+     * @param cmd the user's input
+     * @return a command
+     * @throws NoNumberTaskException throws exception when the number is not specified in delete/mark done command
+     * @throws NoKeywordException throws exception when the keyword is not specified in find command
+     * @throws NoDescriptionException throws exception when the description is not specified for a task
+     * @throws NoDateException throws exception when the date is not specified for deadline and event task
+     * @throws NoCommandException throws exception when the command is unknown
+     */
     public static Command parse(String cmd) throws NoNumberTaskException, NoKeywordException, NoDescriptionException, NoDateException, NoCommandException {
         String[] tokens = cmd.split(" ", 2);
         if(tokens[0].equals("done")) {
